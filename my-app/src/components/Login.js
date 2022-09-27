@@ -7,42 +7,35 @@ import '../App.css'
 import { NavLink, useNavigate } from 'react-router-dom';
 const Login = () => {
     const history = useNavigate();
-    const [data, setData] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const getEmail = (e) => {
-        setEmail(e.target.value)
-    }
-    const getPassword = (e) => {
-        setPassword(e.target.value)
-    }
     const onDataSubmit = (e) => {
         e.preventDefault();
         axios.post(`https://api.social.ramkrishnan.xyz/login`, {
             email,
             password
         })
-            .then(result =>{
-                console.log("token",result.data.response)
+            .then(result => {
+                console.log("result", result)
+                console.log("token", result.data.response)
                 alert('Successfully Logged In')
-                if(result){
-                    const{token} =result.data.response;
-                    localStorage.setItem('token', JSON.stringify(token));
-                    localStorage.getItem('token');
+                if (result) {
+                    const { token } = result.data.response;
+                    localStorage.setItem('token', token);
+                    const { id } = result.data.response;
+                    localStorage.setItem('id', id)
                     history('/dashboard')
-                  
+
                 }
-              
-             })
-            .catch(error =>{
+
+            })
+            .catch(error => {
                 console.log(error)
-                alert(error.response.data.response)
+                alert(Object.values(error.response.data.response))
             }
-              
+
             )
-           
-            const userDetails = localStorage.getItem('UserDetails');
 
     }
 
@@ -55,14 +48,14 @@ const Login = () => {
                         <div className='col-lg-6'>
                             <Form className='card-body mt-5 ml-5 p-5'>
                                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                                    <Form.Control type="email" placeholder="Enter email" onChange={getEmail} />
+                                    <Form.Control type="email" placeholder="Enter email" required={true} onChange={(e) => setEmail(e.target.value)} />
                                     <Form.Text className="text-muted">
                                         We'll never share your email with anyone else.
                                     </Form.Text>
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                                    <Form.Control type="password" placeholder="Password" onChange={getPassword} />
+                                    <Form.Control type="password" placeholder="Password" required={true} onChange={(e) => setPassword(e.target.value)} />
                                 </Form.Group>
                                 <Button variant="primary" type="submit" onClick={onDataSubmit}>
                                     Submit

@@ -41,3 +41,7 @@
   height: 290%;
   width: 50%;
 }
+.form-error{
+  color: red;
+  font-size: 10px;
+}
