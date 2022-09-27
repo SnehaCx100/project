@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import SignInImage from "./signInImage";
 import axios from 'axios';
@@ -28,8 +28,8 @@ const Login = () => {
                 }
 
             })
-            .catch(error => alert(Object.values(error.response.data.response))
-
+            .catch(error =>
+                alert(Object.values(error.response.data.response))
 
             )
 
@@ -44,16 +44,16 @@ const Login = () => {
                         <div className='col-lg-6'>
                             <Form className='card-body mt-5 ml-5 p-5'>
                                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                                    <Form.Control type="email" placeholder="Enter email" required={true} onChange={(e) => setEmail(e.target.value)} />
+                                    <Form.Control type="email" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)} />
                                     <Form.Text className="text-muted">
                                         We'll never share your email with anyone else.
                                     </Form.Text>
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                                    <Form.Control type="password" placeholder="Password" required={true} onChange={(e) => setPassword(e.target.value)} />
+                                    <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
                                 </Form.Group>
-                                <Button variant="primary" type="submit" onSubmit={onDataSubmit}>
+                                <Button variant="primary" type="submit" onClick={onDataSubmit}>
                                     Submit
                                 </Button>
                                 <p className="ep account">Don't have an account?<NavLink to="/"> Signup Now</NavLink></p>
