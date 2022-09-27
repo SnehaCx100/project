@@ -1,14 +1,15 @@
 import React from "react";
-import { NavDropdown } from "react-bootstrap";
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
+import { NavDropdown, Container, Nav, Navbar } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+
 const Header = () => {
-  const name = JSON.parse(localStorage.getItem('userDetails'));
-  console.log(localStorage.getItem('userDetails'))
+  const name = JSON.parse(localStorage.getItem("userDetails"));
+  const history = useNavigate();
+  console.log(localStorage.getItem("userDetails"));
   const logout = () => {
     localStorage.clear();
-  }
+    history("/login");
+  };
 
   return (
     <Navbar bg="dark" variant="dark">
@@ -19,15 +20,18 @@ const Header = () => {
           <Nav.Link href="#features">Features</Nav.Link>
           <Nav.Link href="#pricing">Pricing</Nav.Link>
         </Nav>
-        {localStorage.getItem('userDetails') ?
+        {localStorage.getItem("userDetails") ? (
           <Nav>
-            <NavDropdown title={name && name.firstName} style={{ color: 'white' }}>
+            <NavDropdown
+              title={name && name.firstName}
+              style={{ color: "white" }}
+            >
               <NavDropdown.Item>Profile</NavDropdown.Item>
               <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
               {/* <i className="fa fa-sign-out" style={{ color: 'white', fontSize: '20px', float: 'right' }} */}
             </NavDropdown>
           </Nav>
-          : null}
+        ) : null}
       </Container>
     </Navbar>
   );

@@ -7,6 +7,6 @@ export const signUpSchema = Yup.object({
     dob: Yup.date().required("Enter Your DOB"),
     age: Yup.number().required("Please Enter Your age"),
     password: Yup.string().min(8).required("Password should be at least 8 characters long"),
-    email: Yup.string().email().required("Enter Your Email"),
-    gender: Yup.string().min(3).max(25)
+    email: Yup.string().email('Invalid Email').required("Enter Your Email"),
+    gender: Yup.string().oneOf(['male', 'female'])
 })

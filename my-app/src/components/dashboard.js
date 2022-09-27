@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import * as ReactBootstrap from "react-bootstrap";
+import { Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
@@ -13,17 +13,16 @@ const Dashboard = () => {
 
   const fetchData = async () => {
     try {
-      const data = await axios
+      const data = axios
         .get(`https://api.social.ramkrishnan.xyz/user/${user}`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {
           console.log(res.data);
           const user = JSON.stringify(res.data.response);
-          localStorage.setItem('userDetails', user)
-          console.log(user, "userdeta")
+          localStorage.setItem("userDetails", user);
           if (res) {
-            setName(res.data.response.firstName);
+            setName(user);
           }
         });
       setLoading(true);
@@ -46,11 +45,7 @@ const Dashboard = () => {
           Hi
           <div>
             {" "}
-            {loading ? (
-              name
-            ) : (
-              <ReactBootstrap.Spinner animation="border" role="status" />
-            )}
+            {loading ? name : <Spinner animation="border" role="status" />}
           </div>
         </div>
       </div>

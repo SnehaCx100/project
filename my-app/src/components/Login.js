@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import { Button, Form } from 'react-bootstrap';
 import SignInImage from "./signInImage";
 import axios from 'axios';
 import '../App.css'
@@ -21,19 +20,16 @@ const Login = () => {
                 console.log("token", result.data.response)
                 alert('Successfully Logged In')
                 if (result) {
-                    const { token } = result.data.response;
+                    const { token, id } = result.data.response;
                     localStorage.setItem('token', token);
-                    const { id } = result.data.response;
                     localStorage.setItem('id', id)
                     history('/dashboard')
 
                 }
 
             })
-            .catch(error => {
-                console.log(error)
-                alert(Object.values(error.response.data.response))
-            }
+            .catch(error => alert(Object.values(error.response.data.response))
+
 
             )
 
@@ -57,7 +53,7 @@ const Login = () => {
                                 <Form.Group className="mb-3" controlId="formBasicPassword">
                                     <Form.Control type="password" placeholder="Password" required={true} onChange={(e) => setPassword(e.target.value)} />
                                 </Form.Group>
-                                <Button variant="primary" type="submit" onClick={onDataSubmit}>
+                                <Button variant="primary" type="submit" onSubmit={onDataSubmit}>
                                     Submit
                                 </Button>
                                 <p className="ep account">Don't have an account?<NavLink to="/"> Signup Now</NavLink></p>
