@@ -5,7 +5,7 @@ import Home from './components/home';
 import Login from './components/Login';
 import { Routes, BrowserRouter, Route } from 'react-router-dom'
 import Dashboard from './components/dashboard';
-import RouteProtected from './components/RouteProtected';
+
 
 function App() {
   return (
