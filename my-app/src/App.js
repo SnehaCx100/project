@@ -5,18 +5,20 @@ import Home from './components/home';
 import Login from './components/Login';
 import { Routes, BrowserRouter, Route } from 'react-router-dom'
 import Dashboard from './components/dashboard';
-// import { useState } from 'react';
+import { useState } from 'react';
+
 
 function App() {
+  const [username, setUserName] = useState(null);
   return (
     <div className="App">
 
       <BrowserRouter>
-        <Header />
+        <Header name={username} />
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard setName={setUserName} />} />
         </Routes>
       </BrowserRouter>
     </div>

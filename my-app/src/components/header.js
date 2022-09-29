@@ -2,10 +2,9 @@ import React from "react";
 import { NavDropdown, Container, Nav, Navbar } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-const Header = () => {
-  const name = JSON.parse(localStorage.getItem("userDetails"));
+const Header = ({ name }) => {
+  // const name = localStorage.getItem("userDetails");
   const history = useNavigate();
-  console.log(localStorage.getItem("userDetails"));
   const logout = () => {
     localStorage.clear();
     history("/login");
@@ -20,10 +19,10 @@ const Header = () => {
           <Nav.Link href="#features">Features</Nav.Link>
           <Nav.Link href="#pricing">Pricing</Nav.Link>
         </Nav>
-        {localStorage.getItem("userDetails") ? (
+        {name ? (
           <Nav>
             <NavDropdown
-              title={name && name.firstName}
+              title={name}
               style={{ color: "white" }}
             >
               <NavDropdown.Item>Profile</NavDropdown.Item>

@@ -25,7 +25,7 @@ const Home = () => {
             initialValues: initialValues,
             validationSchema: signUpSchema,
             onSubmit: (values) => {
-                console.log(values);
+
                 axios
                     .post(`https://api.social.ramkrishnan.xyz/register`, {
                         ...values,
@@ -104,7 +104,7 @@ const Home = () => {
                                 <Form.Group className="mb-3 " controlId="formBasicGender">
                                     <Form.Control
                                         as="select"
-                                        custom
+                                        custom="true"
                                         value={values.gender}
                                         onChange={handleChange}
                                         onBlur={handleBlur}

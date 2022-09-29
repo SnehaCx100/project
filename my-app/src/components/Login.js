@@ -16,8 +16,6 @@ const Login = () => {
             password
         })
             .then(result => {
-                console.log("result", result)
-                console.log("token", result.data.response)
                 alert('Successfully Logged In')
                 if (result) {
                     const { token, id } = result.data.response;
