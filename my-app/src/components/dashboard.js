@@ -13,6 +13,7 @@ const Dashboard = (props) => {
   const [hideModal, setHideModal] = useState(false)
   const id = localStorage.getItem('id');
   const token = localStorage.getItem("token");
+
   const [userData, setUserData] = useState({
     firstName: '',
     lastName: '',
@@ -52,6 +53,7 @@ const Dashboard = (props) => {
   const handleSubmit = ({ }) => {
     console.log(userData)
     setHideModal(true);
+
     delete userData.age;
     delete userData.gender;
     delete userData.dob;
@@ -80,6 +82,7 @@ const Dashboard = (props) => {
     setShow(true);
 
   }
+
   return (
     <>
       <div className="container mt-5">
@@ -132,7 +135,7 @@ const Dashboard = (props) => {
                   type="text"
                   name="firstName"
                   placeholder="Enter First Name"
-                  value={userData && userData.firstName}
+                  value={userData.firstName}
                   onChange={(e) => { setUserData({ ...userData, firstName: e.target.value }) }}
                 />
 
@@ -142,7 +145,7 @@ const Dashboard = (props) => {
                   type="text"
                   name="lastName"
                   placeholder="Enter Last Name"
-                  value={userData && userData.lastName}
+                  value={userData.lastName}
                   onChange={(e) => { setUserData({ ...userData, lastName: e.target.value }) }}
                 />
 
