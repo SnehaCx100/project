@@ -6,23 +6,16 @@ import { Table, Button, Modal, Form } from 'react-bootstrap';
 
 const Dashboard = (props) => {
   const navigate = useNavigate();
-  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const [hideModal, setHideModal] = useState(false)
+  // const [hideModal, setHideModal] = useState(false)
   const id = localStorage.getItem('id');
   const token = localStorage.getItem("token");
-
-  const [userData, setUserData] = useState({
-    firstName: '',
-    lastName: '',
-    phoneNumber: ''
-  })
+  const [userData, setUserData] = useState({})
   const fetchData = async () => {
 
     try {
-      const id = localStorage.getItem('id');
       const data = axios
         .get(`https://api.social.ramkrishnan.xyz/user/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
@@ -34,14 +27,13 @@ const Dashboard = (props) => {
           // arr.push(res.data.response);
           // setData(arr);
           // console.log(res.data);
-          var user = res.data.response;
+          const user = res.data.response;
           const jsonString = JSON.stringify(user);
           localStorage.setItem("userDetails", jsonString);
-
-
           if (res) {
-            setData(user);
+            setUserData(user);
             props.setName(user.firstName)
+
             // setUserName(res.data.response.firstName)
           }
         });
@@ -50,10 +42,8 @@ const Dashboard = (props) => {
       console.log(e);
     }
   };
-  const handleSubmit = ({ }) => {
-    console.log(userData)
-    setHideModal(true);
-
+  const handleSubmit = () => {
+    setShow(false);
     delete userData.age;
     delete userData.gender;
     delete userData.dob;
@@ -63,15 +53,19 @@ const Dashboard = (props) => {
       {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .then(result =>
-        console.log(result)
+      .then(result => {
+        const userData = result.data.response;
+        setUserData(userData);
+        props.setName(userData.firstName)
+      }
+
+
       )
 
   }
-  console.log(userData)
 
   useEffect(() => {
-    setUserData(JSON.parse(localStorage.getItem('userDetails')))
+    // setUserData(JSON.parse(localStorage.getItem('userDetails')))
     if (!localStorage.getItem("token")) {
       navigate("/login");
 
@@ -107,12 +101,12 @@ const Dashboard = (props) => {
                 <tbody>
                   <tr>
                     <td>1</td>
-                    <td>{data.firstName}</td>
-                    <td>{data.lastName}</td>
-                    <td>{data.phoneNumber}</td>
-                    <td>{data.age}</td>
-                    <td>{data.gender}</td>
-                    <td>{data.email}</td>
+                    <td>{userData.firstName}</td>
+                    <td>{userData.lastName}</td>
+                    <td>{userData.phoneNumber}</td>
+                    <td>{userData.age}</td>
+                    <td>{userData.gender}</td>
+                    <td>{userData.email}</td>
                     <td><Button variant="info" className="success" onClick={handleShow}>
                       Edit
                     </Button></td>
@@ -124,7 +118,7 @@ const Dashboard = (props) => {
         </div>
       </div>
       <div >
-        <Modal show={show} onHide={handleClose} className={hideModal ? 'd-none' : ''}>
+        <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Update User Details</Modal.Title>
           </Modal.Header>
@@ -135,8 +129,8 @@ const Dashboard = (props) => {
                   type="text"
                   name="firstName"
                   placeholder="Enter First Name"
-                  value={userData.firstName}
-                  onChange={(e) => { setUserData({ ...userData, firstName: e.target.value }) }}
+                  value={userData && userData.firstName}
+                  onChange={(e) => setUserData({ ...userData, firstName: e.target.value })}
                 />
 
               </Form.Group>
@@ -145,8 +139,8 @@ const Dashboard = (props) => {
                   type="text"
                   name="lastName"
                   placeholder="Enter Last Name"
-                  value={userData.lastName}
-                  onChange={(e) => { setUserData({ ...userData, lastName: e.target.value }) }}
+                  value={userData && userData.lastName}
+                  onChange={(e) => setUserData({ ...userData, lastName: e.target.value })}
                 />
 
               </Form.Group>
@@ -157,14 +151,13 @@ const Dashboard = (props) => {
                   name="phoneNumber"
                   placeholder="Enter Number"
                   value={userData && userData.phoneNumber}
-                  onChange={(e) => { setUserData({ ...userData, phoneNumber: e.target.value }) }}
+                  onChange={(e) => setUserData({ ...userData, phoneNumber: e.target.value })}
                 />
 
               </Form.Group>
               <Form.Group className="mb-3 " controlId="formBasicGender">
                 <Form.Control
                   as="select"
-                  custom="true"
                   defaultValue="male"
                   name="gender"
                   value={userData && userData.gender}

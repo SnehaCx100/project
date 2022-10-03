@@ -104,7 +104,6 @@ const Home = () => {
                                 <Form.Group className="mb-3 " controlId="formBasicGender">
                                     <Form.Control
                                         as="select"
-                                        custom="true"
                                         value={values.gender}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
