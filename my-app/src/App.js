@@ -14,7 +14,7 @@ function App() {
     <div className="App">
 
       <BrowserRouter>
-        <Header name={username} />
+        <Header name={username} setName={setUserName} />
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />

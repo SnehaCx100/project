@@ -2,10 +2,11 @@ import React from "react";
 import { NavDropdown, Container, Nav, Navbar } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-const Header = ({ name }) => {
+const Header = ({ name, setName }) => {
   // const name = localStorage.getItem("userDetails");
   const history = useNavigate();
   const logout = () => {
+    setName(null)
     localStorage.clear();
     history("/login");
   };

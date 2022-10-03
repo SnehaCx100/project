@@ -11,8 +11,13 @@ const Dashboard = (props) => {
   const handleClose = () => setShow(false);
   // const [hideModal, setHideModal] = useState(false)
   const id = localStorage.getItem('id');
+  const [data, setData] = useState({})
   const token = localStorage.getItem("token");
-  const [userData, setUserData] = useState({})
+  const [userData, setUserData] = useState({
+    firstName: '',
+    lastName: '',
+    phoneNumber: ''
+  })
   const fetchData = async () => {
 
     try {
@@ -31,7 +36,7 @@ const Dashboard = (props) => {
           const jsonString = JSON.stringify(user);
           localStorage.setItem("userDetails", jsonString);
           if (res) {
-            setUserData(user);
+            setData(user);
             props.setName(user.firstName)
 
             // setUserName(res.data.response.firstName)
@@ -44,19 +49,20 @@ const Dashboard = (props) => {
   };
   const handleSubmit = () => {
     setShow(false);
-    delete userData.age;
-    delete userData.gender;
-    delete userData.dob;
-    delete userData.email;
     axios.put(`https://api.social.ramkrishnan.xyz/user/${id}`,
-      userData,
+      {
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        phoneNumber: userData.phoneNumber
+      },
       {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(result => {
-        const userData = result.data.response;
-        setUserData(userData);
-        props.setName(userData.firstName)
+        fetchData();
+        const userDetails = result.data.response;
+        setUserData(userDetails);
+        props.setName(userDetails.firstName)
       }
 
 
@@ -65,7 +71,7 @@ const Dashboard = (props) => {
   }
 
   useEffect(() => {
-    // setUserData(JSON.parse(localStorage.getItem('userDetails')))
+    setUserData(JSON.parse(localStorage.getItem('userDetails')))
     if (!localStorage.getItem("token")) {
       navigate("/login");
 
@@ -101,12 +107,12 @@ const Dashboard = (props) => {
                 <tbody>
                   <tr>
                     <td>1</td>
-                    <td>{userData.firstName}</td>
-                    <td>{userData.lastName}</td>
-                    <td>{userData.phoneNumber}</td>
-                    <td>{userData.age}</td>
-                    <td>{userData.gender}</td>
-                    <td>{userData.email}</td>
+                    <td>{data.firstName}</td>
+                    <td>{data.lastName}</td>
+                    <td>{data.phoneNumber}</td>
+                    <td>{data.age}</td>
+                    <td>{data.gender}</td>
+                    <td>{data.email}</td>
                     <td><Button variant="info" className="success" onClick={handleShow}>
                       Edit
                     </Button></td>
